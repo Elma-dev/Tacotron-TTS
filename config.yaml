@@ -1,0 +1,25 @@
+audio:
+  sample_rate: 22050
+  win_length: 1024
+  hop_length: 256
+  fft_size: 1024
+  num_mels: 80
+  mel_fmin: 0
+  mel_fmax: 8000
+dataset:
+  formatter: "ljspeech"
+  meta_file_train: "metadata.csv"
+  path: "./processed_data"
+model:
+  run_name: "tacotron2_trump"
+  batch_size: 32
+  eval_batch_size: 16
+  epochs: 3
+  print_step: 25
+  save_step: 100
+  num_loader_workers: 2
+  num_eval_loader_workers: 1
+  compute_input_seq_cache: True
+  output_path: "./model"
+  eval_split_size: 0.20
+  dashboard_logger: "wandb"

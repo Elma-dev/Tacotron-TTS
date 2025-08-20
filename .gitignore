@@ -1,0 +1,4 @@
+./data
+.env
+data_prep.ipynb
+*.zip
