@@ -12,14 +12,17 @@ dataset:
   path: "./processed_data"
 model:
   run_name: "tacotron2_trump"
-  batch_size: 32
-  eval_batch_size: 16
-  epochs: 3
+  batch_size: 8
+  eval_batch_size: 8
+  epochs: 30
   print_step: 25
   save_step: 100
   num_loader_workers: 2
   num_eval_loader_workers: 1
   compute_input_seq_cache: True
   output_path: "./model"
-  eval_split_size: 0.20
+  eval_split_size: 0.05
+  learning_rate : 1e-3
+  start_decay : 100
+  decay_steps : 25
   dashboard_logger: "wandb"

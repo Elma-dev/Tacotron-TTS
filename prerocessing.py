@@ -11,8 +11,18 @@ import soundfile as sf
 import importlib
 import codecs
 import pandas as pd
-
+import logging
 importlib.reload(configs)
+
+
+logger= logging.getLogger(name="__file__")
+logger.setLevel(logging.INFO)
+handler = logging.StreamHandler()
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+
+
 
 class DataPreprocessing():
     def __init__(self):
@@ -110,7 +120,7 @@ class DataPreprocessing():
         return df
 
 if __name__=="__main__":
-    print("[INFO] Start Data Preprocessing...")
+    logger.info("Start Data Preprocessing...")
     data_preprocessing=DataPreprocessing()
     df=data_preprocessing()
-    print("[INFO] Data Preprocessing Finshed.")
+    logger.info("Data Preprocessing Finshed.")

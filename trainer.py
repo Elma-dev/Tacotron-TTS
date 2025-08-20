@@ -9,6 +9,14 @@ from TTS.tts.models.tacotron2 import Tacotron2
 from TTS.tts.utils.text.tokenizer import TTSTokenizer
 from TTS.utils.audio import AudioProcessor
 from dotenv import load_dotenv
+import logging
+
+logger = logging.getLogger(name="__file__")
+logger.setLevel(logging.INFO)
+handler = logging.StreamHandler()
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
 
 load_dotenv()
 
@@ -18,7 +26,7 @@ def load_config(path: str) -> Dict:
 
 if __name__=="__main__":
     config_data = load_config("config.yaml")
-    print("[INFO] Set Base Audio Configs...")
+    logger.info("Set Base Audio Configs...")
     audio_config = BaseAudioConfig(
         sample_rate=config_data["audio"]["sample_rate"],
         win_length=config_data["audio"]["win_length"],
@@ -28,13 +36,13 @@ if __name__=="__main__":
         mel_fmin=config_data["audio"]["mel_fmin"],
         mel_fmax=config_data["audio"]["mel_fmax"],
     )
-    print("[INFO] Set Base Data Configs...")
+    logger.info("Set Base Data Configs...")
     dataset_config = BaseDatasetConfig(
         formatter=config_data["dataset"]["formatter"], # ljspeech-style: metadata.csv | wavs/
         meta_file_train=config_data["dataset"]["meta_file_train"],
         path=config_data["dataset"]["path"],
     )
-    print("[INFO] Set Model Configs...")
+    logger.info("Set Model Configs...")
     config_ = Tacotron2Config(
         audio=audio_config,
         run_name=config_data["model"]["run_name"],
@@ -49,21 +57,22 @@ if __name__=="__main__":
         output_path=config_data["model"]["output_path"],
         datasets=[dataset_config],
         eval_split_size=config_data["model"]["eval_split_size"],
-        dashboard_logger=config_data["model"]["dashboard_logger"]
+        dashboard_logger=config_data["model"]["dashboard_logger"],
+        lr=config_data["model"]["learning_rate"]
     )
-    print("[INFO] Set Processor/Tokenizer...")
+    logger.info("Set Processor/Tokenizer...")
     ap = AudioProcessor.init_from_config(config_)
     tokenizer, config_tok = TTSTokenizer.init_from_config(config_)
-    print("[INFO] Load Data Samples...")
+    logger.info("Load Data Samples...")
     train_samples, eval_samples = load_tts_samples(
         dataset_config,
         eval_split=True,
         eval_split_max_size=config_tok.eval_split_max_size,
         eval_split_size=config_tok.eval_split_size,
     )
-    print("[INFO] Set Model...")
+    logger.info("Set Model...")
     model = Tacotron2(config_, ap, tokenizer)
-    print("[INFO] Set Trainer...")
+    logger.info("Set Trainer...")
     trainer = Trainer(
         TrainerArgs(),
         config_,
@@ -72,6 +81,6 @@ if __name__=="__main__":
         train_samples=train_samples,
         eval_samples=eval_samples
     )
-    print("[INFO] Begin Training...")
+    logger.info("Begin Training...")
     trainer.fit()
-    print("[INFO] End Training")
+    logger.info("End Training")
