@@ -9,4 +9,6 @@ dependencies = [
     "nemo-text-processing>=1.1.0",
     "python-dotenv>=1.1.1",
     "wandb>=0.21.1",
+    "torchaudio",
+    "soundfile",
 ]

@@ -10,9 +10,9 @@ The primary thought process behind this project was to leverage existing, well-e
 
 ### High-Level Steps:
 
-1.  **Data Acquisition and Preprocessing:** Collect a diverse dataset of Trump's speeches (specifically from Kaggle: [etaifour/trump-speeches-audio-and-word-transcription](https://www.kaggle.com/datasets/etaifour/trump-speeches-audio-and-word-transcription)) and preprocess the audio and text to be compatible with the Coqui TTS format (LJSpeech-style).
+1.  **Data Acquisition and Preprocessing:** Using a dataset of Trump's speeches (specifically from Kaggle: [etaifour/trump-speeches-audio-and-word-transcription](https://www.kaggle.com/datasets/etaifour/trump-speeches-audio-and-word-transcription)) and preprocess the audio and text to be compatible with the Coqui TTS format (LJSpeech-style).
 2.  **Configuration Management:** Centralize hyper-parameters and model configurations in a YAML file (`config.yaml`) for easy modification and experimentation.
-3.  **Model Fine-tuning:** Utilize the `trainer.py` script to fine-tune a pre-trained Tacotron2 model on the prepared dataset.
+3.  **Model Fine-tuning:** Utilize the `train.py` script to fine-tune a pre-trained Tacotron2 model on the prepared dataset.
 4.  **Inference and Evaluation:** After training, use the fine-tuned model to generate new speech and evaluate its quality.
 
 ## Architectural Choices
@@ -64,13 +64,13 @@ The primary thought process behind this project was to leverage existing, well-e
 
 ## Challenges and Solutions
 
--   **Data Quality and Quantity:** Obtaining a clean and sufficiently large dataset of Trump's speeches with accurate transcriptions was a primary challenge. Solutions involved using publicly available datasets and careful manual verification/correction of transcriptions.
+-   **Data Quality and Quantity:** Obtaining a clean and sufficiently large dataset of Trump's speeches (1.5h) with accurate transcriptions was a primary challenge. Solutions involved using publicly available datasets and careful manual verification/correction of transcriptions.
 
 -   **Computational Resources:** Training large TTS models like Tacotron2 can be computationally intensive. The solution involves leveraging GPU resources and optimizing batch sizes and other training parameters to make efficient use of available hardware.
 
 -   **Environment Setup:** Ensuring all dependencies and the Coqui TTS library are correctly installed can be tricky due to potential conflicts. Providing clear `pip install` instructions and recommending a virtual environment helps mitigate this.
 
--   **Fine-tuning Convergence:** Achieving good convergence and natural-sounding speech during fine-tuning can be challenging. Experimentation with learning rates, optimizer choices, and monitoring loss curves are crucial steps. The use of WandB for logging helps in tracking and comparing experiments.
+-   **Fine-tuning Convergence:** Achieving good convergence and natural-sounding speech during fine-tuning can be challenging. Experimentation with learning rates, optimizer choices, and monitoring loss curves are crucial steps. The use of **WandB** for logging helps in tracking and comparing experiments.
 
 ## Setup and Running Instructions
 
@@ -87,29 +87,24 @@ cd trump_tts
 
 ```bash
 python -m venv venv
-source venv/bin/activate  # On Windows: .\venv\Scripts\activate
+source venv/bin/activate 
 ```
 
 ### 3. Install Dependencies
 
 ```bash
-uv pip install -r requirements.txt
-# Or, if you need all Coqui TTS dependencies:
-uv pip install 'TTS[all]' pyyaml python-dotenv
-```
-
-To generate `requirements.txt` if it doesn't exist, you can run:
-```bash
-uv pip freeze > requirements.txt
+uv pip install -r pyproject.toml
 ```
 
 ### 4. Prepare Data
 
-Run the `data_prep.ipynb` Jupyter notebook to preprocess the audio and text data. This notebook will guide you through the steps to create the `metadata.csv` and processed audio files in the `./processed_data` directory.
+Run the `preprocessing.py` on the audio and text data. This script will guide you through the steps to create the `metadata.csv` and processed audio files in the `./processed_data` directory.
 
 ```bash
-jupyter notebook data_prep.ipynb
+uv run preprocessing.py
 ```
+
+Before running dataset preprocessing, try to review `configs.py`, also set `.env` based on `.env.example`.
 
 ### 5. Configure Hyper-parameters
 
@@ -120,7 +115,7 @@ Review and adjust the hyper-parameters in `config.yaml` as needed.
 Start the training process by running the `trainer.py` script:
 
 ```bash
-python trainer.py
+uv run train.py
 ```
 
 ### 7. Run Inference (To be implemented)

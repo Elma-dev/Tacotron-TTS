@@ -11,16 +11,11 @@ import soundfile as sf
 import importlib
 import codecs
 import pandas as pd
-import logging
+from utils import logger
 importlib.reload(configs)
 
 
-logger= logging.getLogger(name="__file__")
-logger.setLevel(logging.INFO)
-handler = logging.StreamHandler()
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-handler.setFormatter(formatter)
-logger.addHandler(handler)
+
 
 
 
