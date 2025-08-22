@@ -9,7 +9,7 @@ audio:
 dataset:
   formatter: "ljspeech"
   meta_file_train: "metadata.csv"
-  path: "./processed_data"
+  path: "../processed_data"
 model:
   run_name: "tacotron2_trump"
   batch_size: 8
@@ -20,7 +20,7 @@ model:
   num_loader_workers: 2
   num_eval_loader_workers: 1
   compute_input_seq_cache: True
-  output_path: "./model"
+  output_path: "../model"
   eval_split_size: 0.05
   learning_rate : 1e-3
   start_decay : 100

@@ -1,7 +1,7 @@
 
 import logging
 
-logger= logging.getLogger(name="__file__")
+logger= logging.getLogger(name=__name__)
 logger.setLevel(logging.INFO)
 handler = logging.StreamHandler()
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')

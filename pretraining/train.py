@@ -9,7 +9,7 @@ from TTS.tts.models.tacotron2 import Tacotron2
 from TTS.tts.utils.text.tokenizer import TTSTokenizer
 from TTS.utils.audio import AudioProcessor
 from dotenv import load_dotenv
-from utils import logger
+from other.utils import logger
 
 load_dotenv()
 
