@@ -77,7 +77,7 @@ Follow these steps to set up the environment and run the project:
 ### 1. Clone the Repository
 
 ```bash
-git clone <repository_url>
+git clone https://github.com/Elma-dev/Tacotron-TTS.git
 cd trump_tts
 ```
 
@@ -130,9 +130,9 @@ Below is a table summarizing some hyperparameter experiments and their observed 
 
 | Hyperparameter | Values Tested | Observed Experience |
 |---|---|---|
-| Learning Rate | 1e-4, 5e-5, 3e-5 | Lower rates (3e-5) led to better convergence and reduced overfitting. |
+| Learning Rate | 1e-4, 5e-5, 4e-5, 3e-5 | Lower rates (4e-5) led to better convergence and reduced overfitting. |
 | Batch Size | 8, 16, 32 | Smaller batch sizes (16) provided more stable training, especially early on. |
-| Number of Epochs | 10, 29, 100 | 100 epochs generally yielded good quality, with diminishing returns beyond that. |
+| Number of Epochs | 10, 29, 100, 200 | 100 epochs generally yielded good quality, with diminishing returns beyond that. |
 
 ### 9. Run Inference (To be implemented)
 
