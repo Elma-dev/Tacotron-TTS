@@ -64,12 +64,10 @@ The primary thought process behind this project was to leverage existing, well-e
 
 ## Challenges and Solutions
 
+-   **Training from Scratch vs. Fine-tuning:** Initial attempts to train the model from scratch using `trainer.py` on the custom dataset did not yield satisfactory results, demonstrating difficulty in achieving good convergence and natural-sounding speech. Consequently, the approach shifted directly to fine-tuning a pre-trained model, which significantly improved results and proved more effective for this task with limited domain-specific data.
 -   **Data Quality and Quantity:** Obtaining a clean and sufficiently large dataset of Trump's speeches (1.5h) with accurate transcriptions was a primary challenge. Solutions involved using publicly available datasets and careful manual verification/correction of transcriptions.
-
--   **Computational Resources:** Training large TTS models like Tacotron2 can be computationally intensive. The solution involves leveraging GPU resources and optimizing batch sizes and other training parameters to make efficient use of available hardware.
-
+-   **Computational Resources:** Training large TTS models like Tacotron2 can be computationally intensive. All experiments, including both the initial attempts at training from scratch and the subsequent fine-tuning processes, were conducted remotely via SSH on an RTX 4090 GPU with 24GB of VRAM. Each significant experiment typically required more than one day to complete. The solution involves leveraging such GPU resources and optimizing batch sizes and other training parameters to make efficient use of available hardware.
 -   **Environment Setup:** Ensuring all dependencies and the Coqui TTS library are correctly installed can be tricky due to potential conflicts. Providing clear `pip install` instructions and recommending a virtual environment helps mitigate this.
-
 -   **Fine-tuning Convergence:** Achieving good convergence and natural-sounding speech during fine-tuning can be challenging. Experimentation with learning rates, optimizer choices, and monitoring loss curves are crucial steps. The use of **WandB** for logging helps in tracking and comparing experiments.
 
 ## Setup and Running Instructions
@@ -110,14 +108,32 @@ Before running dataset preprocessing, try to review `configs.py`, also set `.env
 
 Review and adjust the hyper-parameters in `config.yaml` as needed.
 
-### 6. Train the Model
+### 6. Train the Model from Scratch
 
-Start the training process by running the `trainer.py` script:
+Start the training process by running the `trainer.py` script for full training from scratch:
 
 ```bash
-uv run train.py
+uv run trainer.py --config_path config.yaml
 ```
 
-### 7. Run Inference (To be implemented)
+### 7. Fine-tuning the Tacotron2 Model
+
+For fine-tuning the Tacotron2 model using the CoquiTTS CLI, execute the `tacotron_ft.bash` script. This script encapsulates the necessary steps, including model loading, configuration adjustments, GPU cache clearing, and initiating the training process. Please ensure that the `config.json` file path and `model.pth` restore path within the script are correctly pointing to your model's assets.
+
+```bash
+./tacotron_ft.bash
+```
+
+### Hyperparameter Experimentation
+
+Below is a table summarizing some hyperparameter experiments and their observed effects:
+
+| Hyperparameter | Values Tested | Observed Experience |
+|---|---|---|
+| Learning Rate | 1e-4, 5e-5, 3e-5 | Lower rates (3e-5) led to better convergence and reduced overfitting. |
+| Batch Size | 8, 16, 32 | Smaller batch sizes (16) provided more stable training, especially early on. |
+| Number of Epochs | 10, 29, 100 | 100 epochs generally yielded good quality, with diminishing returns beyond that. |
+
+### 9. Run Inference (To be implemented)
 
 Instructions for running inference and generating new audio will be added here once the inference script is developed.
