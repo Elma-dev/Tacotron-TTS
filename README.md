@@ -1,5 +1,7 @@
 # Trump TTS Project
 
+**<span style="color:yellow;">Note: The `data_prep_trainig_inf.ipynb` notebook comprehensively details the entire process, including hands-on data preprocessing, analysis, and training, prior to the separation and transfer of code into individual Python (.py) files. Please review this notebook first for a complete understanding of the project's foundational steps.</span>**
+
 ## Project Overview
 
 This project aims to create a Text-to-Speech (TTS) model capable of generating audio in the voice of Donald Trump. It leverages the Coqui TTS library, specifically fine-tuning a Tacotron2 model on a dataset of Donald Trump's speeches. The goal is to provide a robust and customizable TTS solution for generating realistic-sounding audio.
@@ -10,7 +12,7 @@ This project aims to create a Text-to-Speech (TTS) model capable of generating a
 .
 ├── README.md
 ├── pyproject.toml
-├── data_prep.ipynb
+├── data_prep_trainig_inf.ipynb
 ├── preprocessing/
 │   └── preprocessing.py
 │   └── configs.py
