@@ -19,10 +19,10 @@ This project aims to create a Text-to-Speech (TTS) model capable of generating a
 │   └── train.py
 ├── finetuning/
 │   └── tactoron_ft.bash
-├── infernece/
+├── inference/
 │   └── inference.bash
-│   └── inference.py
-│   └── wavs
+│   └── inference.ipynb
+│   └── wavs/
 │       └── trump1.wav
 │       └── trump2.wav
 └── other/
@@ -173,6 +173,16 @@ This section summarizes the outcomes of the training and fine-tuning experiments
 -   **Visualizations:**
     -   Detailed loss plots, predicted spectrograms, and ground truth spectrograms are available within the respective WandB log pages, providing insights into model convergence and audio quality.
 
-### 9. Run Inference (To be implemented)
+### 9. Run Inference
 
-Instructions for running inference and generating new audio will be added here once the inference script is developed.
+There are two primary methods for running inference:
+
+1.  **Using the CoquiTTS CLI:**
+    Execute the following command, replacing the `model_path` and `config_path` with the actual paths to your fine-tuned model and its configuration file:
+
+    ```bash
+    tts --model_path /workspace/Tacotron-TTS/ft_out/tacotron-ft-v4e-5-250e-August-21-2025_05+18PM-379b5b8/best_model_540.pth --config_path /workspace/Tacotron-TTS/ft_out/tacotron-ft-v4e-5-250e-August-21-2025_05+18PM-379b5b8/config.json --text "hello world"  --use_cuda
+    ```
+
+2.  **Using `inference.ipynb` (To be implemented):**
+    An interactive inference example will be provided in `inference.ipynb` for a more detailed and step-by-step approach to generating speech.
