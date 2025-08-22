@@ -4,6 +4,31 @@
 
 This project aims to create a Text-to-Speech (TTS) model capable of generating audio in the voice of Donald Trump. It leverages the Coqui TTS library, specifically fine-tuning a Tacotron2 model on a dataset of Donald Trump's speeches. The goal is to provide a robust and customizable TTS solution for generating realistic-sounding audio.
 
+## Directory Structure
+
+```
+.
+├── README.md
+├── pyproject.toml
+├── data_prep.ipynb
+├── preprocessing/
+│   └── preprocessing.py
+│   └── configs.py
+├── pretraining/
+│   └── config.yaml
+│   └── train.py
+├── finetuning/
+│   └── tactoron_ft.bash
+├── infernece/
+│   └── inference.bash
+│   └── inference.py
+│   └── wavs
+│       └── trump1.wav
+│       └── trump2.wav
+└── other/
+    └── utils
+```
+
 ## Thought Process and High-Level Approach
 
 The primary thought process behind this project was to leverage existing, well-established TTS architectures for fine-tuning, rather than building a model from scratch. This approach significantly reduces development time and allows for faster iteration.
@@ -96,32 +121,32 @@ uv pip install -r pyproject.toml
 
 ### 4. Prepare Data
 
-Run the `preprocessing.py` on the audio and text data. This script will guide you through the steps to create the `metadata.csv` and processed audio files in the `./processed_data` directory.
+Run the `preprocessing/preprocessing.py` on the audio and text data. This script will guide you through the steps to create the `metadata.csv` and processed audio files in the `./processed_data` directory.
 
 ```bash
-uv run preprocessing.py
+uv run preprocessing/preprocessing.py
 ```
 
-Before running dataset preprocessing, try to review `configs.py`, also set `.env` based on `.env.example`.
+Before running dataset preprocessing, try to review `pretraining/config.yaml`, also set `.env` based on `.env.example`.
 
 ### 5. Configure Hyper-parameters
 
-Review and adjust the hyper-parameters in `config.yaml` as needed.
+Review and adjust the hyper-parameters in `pretraining/config.yaml` as needed.
 
 ### 6. Train the Model from Scratch
 
-Start the training process by running the `trainer.py` script for full training from scratch:
+Start the training process by running the `pretraining/trainer.py` script for full training from scratch:
 
 ```bash
-uv run trainer.py --config_path config.yaml
+uv run pretraining/trainer.py --config_path pretraining/config.yaml
 ```
 
 ### 7. Fine-tuning the Tacotron2 Model
 
-For fine-tuning the Tacotron2 model using the CoquiTTS CLI, execute the `tacotron_ft.bash` script. This script encapsulates the necessary steps, including model loading, configuration adjustments, GPU cache clearing, and initiating the training process. Please ensure that the `config.json` file path and `model.pth` restore path within the script are correctly pointing to your model's assets.
+For fine-tuning the Tacotron2 model using the CoquiTTS CLI, execute the `finetuning/tacotron_ft.bash` script. This script encapsulates the necessary steps, including model loading, configuration adjustments, GPU cache clearing, and initiating the training process. Please ensure that the `config.json` file path and `model.pth` restore path within the script are correctly pointing to your model's assets.
 
 ```bash
-./tacotron_ft.bash
+./finetuning/tacotron_ft.bash
 ```
 
 ### Hyperparameter Experimentation
@@ -133,6 +158,20 @@ Below is a table summarizing some hyperparameter experiments and their observed 
 | Learning Rate | 1e-4, 5e-5, 4e-5, 3e-5 | Lower rates (4e-5) led to better convergence and reduced overfitting. |
 | Batch Size | 8, 16, 32 | Smaller batch sizes (16) provided more stable training, especially early on. |
 | Number of Epochs | 10, 29, 100, 200 | 100 epochs generally yielded good quality, with diminishing returns beyond that. |
+
+## Results
+
+This section summarizes the outcomes of the training and fine-tuning experiments.
+
+-   **WandB Logs:**
+    -   Pretraining Logs: [Link to Pretraining WandB Logs](https://wandb.ai/th3elma2-enset-mohammedia/Tacotron-TTS-Pretraining)
+    -   Fine-tuning Logs: [Link to Fine-tuning WandB Logs](https://wandb.ai/th3elma2-enset-mohammedia/Tacotron-TTS-FT?nw=nwuserth3elma2)
+
+-   **Generated Audio:**
+    -   Synthesized WAV files from inference can be found in the `/wav-results` directory.
+
+-   **Visualizations:**
+    -   Detailed loss plots, predicted spectrograms, and ground truth spectrograms are available within the respective WandB log pages, providing insights into model convergence and audio quality.
 
 ### 9. Run Inference (To be implemented)
 

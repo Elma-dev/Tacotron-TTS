@@ -11,7 +11,7 @@ from TTS.utils.audio import AudioProcessor
 from dotenv import load_dotenv
 from other.utils import logger
 
-load_dotenv()
+load_dotenv(dotenv_path="../.env")
 
 def load_config(path: str) -> Dict:
     with open(path, "r") as f:

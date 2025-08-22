@@ -11,7 +11,7 @@ import soundfile as sf
 import importlib
 import codecs
 import pandas as pd
-from utils import logger
+from other.utils import logger
 importlib.reload(configs)
 
 
