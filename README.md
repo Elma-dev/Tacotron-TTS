@@ -52,6 +52,8 @@ The primary thought process behind this project was to leverage existing, well-e
     -   **`prerocessing.py`:** This script contains the `DataPreprocessing` class, which handles the core logic for audio segmentation, text normalization, and generating the `metadata.csv` file required by the Coqui TTS training pipeline. It reads raw audio and JSON transcription files, segments audio into shorter clips based on word timings, normalizes the accompanying text, and saves the processed audio and metadata. This ensures the data is in the correct format and meets the duration requirements for effective model training.
 
     ### Detailed Data Preprocessing Steps
+    <img width="4502" height="436" alt="image" src="https://github.com/user-attachments/assets/537b4b2e-328c-4ff8-9c0b-bd6a529744d0" />
+
 
     The `DataPreprocessing` class orchestrates the entire data preparation pipeline. Here's a breakdown of its key methods:
 
