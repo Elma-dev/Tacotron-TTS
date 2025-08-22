@@ -186,5 +186,5 @@ There are two primary methods for running inference:
     tts --model_path /workspace/Tacotron-TTS/ft_out/tacotron-ft-v4e-5-250e-August-21-2025_05+18PM-379b5b8/best_model_540.pth --config_path /workspace/Tacotron-TTS/ft_out/tacotron-ft-v4e-5-250e-August-21-2025_05+18PM-379b5b8/config.json --text "hello world"  --use_cuda
     ```
 
-2.  **Using `inference.ipynb` (To be implemented):**
+2.  **Using `inference.ipynb`:**
     An interactive inference example will be provided in `inference.ipynb` for a more detailed and step-by-step approach to generating speech.
