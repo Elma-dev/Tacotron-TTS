@@ -110,7 +110,7 @@ Follow these steps to set up the environment and run the project:
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/Elma-dev/Tacotron-TTS.git
+git clone https://github.com/Elma-dev/Tacotron-Vits-TTS.git
 cd trump_tts
 ```
 
