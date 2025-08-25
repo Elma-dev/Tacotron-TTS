@@ -21,6 +21,7 @@ This project aims to create a Text-to-Speech (TTS) model capable of generating a
 │   └── train.py
 ├── finetuning/
 │   └── tactoron_ft.bash
+│   └── vits_ft.bash
 ├── inference/
 │   └── inference.bash
 │   └── inference.ipynb
@@ -98,6 +99,7 @@ The primary thought process behind this project was to leverage existing, well-e
 -   **Computational Resources:** Training large TTS models like Tacotron2 can be computationally intensive. All experiments, including both the initial attempts at training from scratch and the subsequent fine-tuning processes, were conducted remotely via SSH on an RTX 4090 GPU with 24GB of VRAM. Each significant experiment typically required more than one day to complete. The solution involves leveraging such GPU resources and optimizing batch sizes and other training parameters to make efficient use of available hardware.
 -   **Environment Setup:** Ensuring all dependencies and the Coqui TTS library are correctly installed can be tricky due to potential conflicts. Providing clear `pip install` instructions and recommending a virtual environment helps mitigate this.
 -   **Fine-tuning Convergence:** Achieving good convergence and natural-sounding speech during fine-tuning can be challenging. Experimentation with learning rates, optimizer choices, and monitoring loss curves are crucial steps. The use of **WandB** for logging helps in tracking and comparing experiments.
+-   **Inference Issues with Tacotron2 and Transition to VITS:** After fine-tuning Tacotron2, while evaluation results were good, Coqui TTS Tacotron2 presented problems during inference. This led to a direct pivot to fine-tune the VITS model, which, despite requiring more complex configuration, ultimately yielded good results.
 
 ## Setup and Running Instructions
 
@@ -145,21 +147,21 @@ Start the training process by running the `pretraining/trainer.py` script for fu
 uv run pretraining/trainer.py --config_path pretraining/config.yaml
 ```
 
-### 7. Fine-tuning the Tacotron2 Model
+### 7. Fine-tuning the VITS Model
 
-For fine-tuning the Tacotron2 model using the CoquiTTS CLI, execute the `finetuning/tacotron_ft.bash` script. This script encapsulates the necessary steps, including model loading, configuration adjustments, GPU cache clearing, and initiating the training process. Please ensure that the `config.json` file path and `model.pth` restore path within the script are correctly pointing to your model's assets.
+For fine-tuning the VITS model, execute the `finetuning/vits_ft.bash` script. This script is set up to use a pre-trained VITS model and your processed dataset. **Before running, please update the `CONFIG_PATH`, `RESTORE_PATH`, and `OUT_PATH` variables within the `vits_ft.bash` script to point to your specific configuration file, pre-trained model checkpoint, and desired output directory.**
 
 ```bash
-./finetuning/tacotron_ft.bash
+./finetuning/vits_ft.bash
 ```
 
-### Hyperparameter Experimentation
+### 8. Hyperparameter Experimentation
 
 Below is a table summarizing some hyperparameter experiments and their observed effects:
 
 | Hyperparameter | Values Tested | Observed Experience |
 |---|---|---|
-| Learning Rate | 1e-4, 5e-5, 4e-5, 3e-5 | Lower rates (4e-5) led to better convergence and reduced overfitting. |
+| Learning Rate | 1e-4, 5e-5, 4e-5, 3e-5 | Lower rates (3e-5) led to better convergence and reduced overfitting. |
 | Batch Size | 8, 16, 32 | Smaller batch sizes (16) provided more stable training, especially early on. |
 | Number of Epochs | 10, 29, 100, 200 | 100 epochs generally yielded good quality, with diminishing returns beyond that. |
 
@@ -182,7 +184,7 @@ This section summarizes the outcomes of the training and fine-tuning experiments
 There are two primary methods for running inference:
 
 1.  **Using the CoquiTTS CLI:**
-    Execute the following command, replacing the `model_path` and `config_path` with the actual paths to your fine-tuned model and its configuration file:
+    Execute the following command, replacing the `model_path` and `config_path` with the actual paths to your fine-tuned VITS model and its configuration file:
 
     ```bash
     tts --model_path /workspace/Tacotron-TTS/ft_out/tacotron-ft-v4e-5-250e-August-21-2025_05+18PM-379b5b8/best_model_540.pth --config_path /workspace/Tacotron-TTS/ft_out/tacotron-ft-v4e-5-250e-August-21-2025_05+18PM-379b5b8/config.json --text "hello world"  --use_cuda
