@@ -1,10 +1,10 @@
 # Trump TTS Project
 
-**<span style="color:yellow;">Note: The `data_prep_trainig_inf.ipynb` notebook comprehensively details the entire process, including hands-on data preprocessing, analysis, and training, prior to the separation and transfer of code into individual Python (.py) files. Please review this notebook first for a complete understanding of the project's foundational steps. please click open on colab to see the full notebook.</span>**
+**<span style="color:yellow;">Note: The `data_prep_trainig_inf.ipynb` notebook comprehensively details the entire process, including hands-on data preprocessing, analysis, and training, prior to the separation and transfer of code into individual Python (.py) files. Please review this notebook first for a complete understanding of the project's foundational steps.</span>**
 
 ## Project Overview
 
-This project aims to create a Text-to-Speech (TTS) model capable of generating audio in the voice of Donald Trump. It leverages the Coqui TTS library, specifically fine-tuning a Tacotron2 model on a dataset of Donald Trump's speeches. The goal is to provide a robust and customizable TTS solution for generating realistic-sounding audio.
+This project aims to create a Text-to-Speech (TTS) model that generates audio in the voice of Donald Trump. It utilizes the Coqui TTS library, with a focus on fine-tuning both Tacotron2 and VITS models using a dataset of Trump's speeches. The objective is to deliver a robust and flexible TTS solution capable of producing realistic and expressive Trump-style speech.
 
 ## Directory Structure
 
@@ -168,10 +168,13 @@ Below is a table summarizing some hyperparameter experiments and their observed 
 ## Results
 
 This section summarizes the outcomes of the training and fine-tuning experiments.
-
+- **Model/Haperparams:**
+    - Tacotron2: [Link to Model](https://wandb.ai/th3elma2-enset-mohammedia/Tacotron-TTS-FT/artifacts/model/7fgmy1ge_checkpoint/v6/files)
+    - Vits: [Link to Model](https://wandb.ai/th3elma2-enset-mohammedia/VITS-TTS-FT/artifacts/model/10hz6hco_checkpoint/v2/files)
 -   **WandB Logs:**
-    -   Pretraining Logs: [Link to Pretraining WandB Logs](https://wandb.ai/th3elma2-enset-mohammedia/Tacotron-TTS-Pretraining)
-    -   Fine-tuning Logs: [Link to Fine-tuning WandB Logs](https://wandb.ai/th3elma2-enset-mohammedia/Tacotron-TTS-FT?nw=nwuserth3elma2)
+    -   Tacotron2 Pretraining Logs: [Link to Pretraining WandB Logs](https://wandb.ai/th3elma2-enset-mohammedia/Tacotron-TTS-Pretraining)
+    -   Tacotron2 Fine-tuning Logs: [Link to Fine-tuning WandB Logs](https://wandb.ai/th3elma2-enset-mohammedia/Tacotron-TTS-FT?nw=nwuserth3elma2)
+    -   Vits Fine-tuning Logs: [Link to Fine-tuning WandB Logs](https://wandb.ai/th3elma2-enset-mohammedia/VITS-TTS-FT/runs/10hz6hco?nw=nwuserth3elma2)
 
 -   **Generated Audio:**
     -   Synthesized WAV files from inference can be found in the `/wav-results` directory.
@@ -189,6 +192,3 @@ There are two primary methods for running inference:
     ```bash
     tts --model_path /workspace/Tacotron-TTS/ft_out/tacotron-ft-v4e-5-250e-August-21-2025_05+18PM-379b5b8/best_model_540.pth --config_path /workspace/Tacotron-TTS/ft_out/tacotron-ft-v4e-5-250e-August-21-2025_05+18PM-379b5b8/config.json --text "hello world"  --use_cuda
     ```
-
-2.  **Using `inference.ipynb`:**
-    An interactive inference example will be provided in `inference.ipynb` for a more detailed and step-by-step approach to generating speech.
