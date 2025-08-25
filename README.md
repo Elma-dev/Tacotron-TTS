@@ -1,6 +1,6 @@
 # Trump TTS Project
 
-**<span style="color:yellow;">Note: The `data_prep_trainig_inf.ipynb` notebook comprehensively details the entire process, including hands-on data preprocessing, analysis, and training, prior to the separation and transfer of code into individual Python (.py) files. Please review this notebook first for a complete understanding of the project's foundational steps.</span>**
+**<span style="color:yellow;">Note: The `notebook/data_prep_trainig_inf.ipynb` notebook comprehensively details the entire process, including hands-on data preprocessing, analysis, and training, prior to the separation and transfer of code into individual Python (.py) files. Please review this notebook first for a complete understanding of the project's foundational steps. please try to open it in colab by clicking open in colab button.</span>**
 
 ## Project Overview
 
