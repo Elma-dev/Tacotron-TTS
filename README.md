@@ -2,6 +2,8 @@
 
 **<span style="color:yellow;">Note: The `notebook/data_prep_trainig_inf.ipynb` notebook comprehensively details the entire process, including hands-on data preprocessing, analysis, and training, prior to the separation and transfer of code into individual Python (.py) files. Please review this notebook first for a complete understanding of the project's foundational steps. please try to open it in colab by clicking open in colab button.</span>**
 
+**`Infernce/wavs` contains examples of generated audios by the finetunned model**.
+
 ## Project Overview
 
 This project aims to create a Text-to-Speech (TTS) model that generates audio in the voice of Donald Trump. It utilizes the Coqui TTS library, with a focus on fine-tuning both Tacotron2 and VITS models using a dataset of Trump's speeches. The objective is to deliver a robust and flexible TTS solution capable of producing realistic and expressive Trump-style speech.
